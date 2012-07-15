@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+    <script><![CDATA[
+
+function startMove(evt, moveType){
+	 x1 = evt.clientX;
+ 	 y1 = evt.clientY;
+ 	 document.documentElement.setAttribute("onmousemove","moveIt(evt)")
+
+ 	 if (moveType == 'single'){
+ 	 	C = evt.currentTarget;
+ 	 }
+ 	 else {
+ 	 	C = evt.currentTarget.parentNode;
+ 	 }
+}
+
+function moveIt(evt){
+    translation = C.getAttributeNS(null, "transform").slice(10,-1).split(' ');
+    console.log(translation)
+	sx = parseInt(translation[0]);
+ 	sy = parseInt(translation[1]);
+
+ 	C.setAttributeNS(null, "transform", "translate(" + (sx + evt.clientX - x1) + " " + (sy + evt.clientY - y1) + ")");
+	x1 = evt.clientX;
+ 	y1 = evt.clientY;
+}
+
+function endMove(){
+ 	document.documentElement.setAttributeNS(null, "onmousemove",null)
+}
+
+]]></script>
+    <defs>
+        <circle id="circle4" fill="red" stroke="black" stroke-width="8" cx="0" cy="0" r="22"/>
+        <g id="blah">
+            <use xlink:href="svg-cards.svg#3_club"/>
+            <circle fill="green" stroke="black" stroke-width="8" cx="0" cy="0" r="22"/>
+        </g>
+    </defs>
+    <rect x="0" y="0" width="100%" height="100%" fill="dodgerblue"/>
+
+    <g transform="translate(0 0)">
+        <circle id="circle1"
+                onmousedown="startMove(evt, 'single')" onmouseup="endMove()"
+                transform="translate(60 200)" cx="0" cy="0" r="22"
+                fill="blue" stroke="black" stroke-width="8"/>
+        <circle id="circle2"
+                onmousedown="startMove(evt, 'single')" onmouseup="endMove()"
+                transform="translate(200 200)" cx="0" cy="0" r="22"
+                fill="grey" stroke="black" stroke-width="8"/>
+        <circle id="circle3"
+                onmousedown="startMove(evt, 'group')" onmouseup="endMove()"
+                transform="translate(50 50)" cx="0" cy="0" r="22"
+                fill="orange" stroke="black" stroke-width="8"/>
+
+        <use xlink:href="svg-cards.svg#1_club" x="300" y="300"
+             onmousedown="startMove(evt, 'single')" onmouseup="endMove()"/>
+        <use xlink:href="svg-cards.svg#2_club" x="300" y="300"
+             transform="translate(0 0)"
+             onmousedown="startMove(evt, 'single')" onmouseup="endMove()"/>
+        <use xlink:href="#circle4" x="300" y="300"
+             transform="translate(0 0)"
+             onmousedown="startMove(evt, 'single')" onmouseup="endMove()"/>
+        <use xlink:href="#blah" x="400" y="300"
+             transform="translate(0 0)"
+             onmousedown="startMove(evt, 'single')" onmouseup="endMove()"/>
+
+    </g>
+
+</svg>
