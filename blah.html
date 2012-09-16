@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+    <title>blah demo</title>
+    <style type="text/css">@import "lib/jquery.svg-1.4.5/jquery.svg.css";</style>
+    <script src="lib/jquery-1.8.1.min.js" type="text/javascript"></script>
+    <script src="lib/jquery.svg-1.4.5/jquery.svg.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var getSvgCanvasOrigin = function () {
+                    var boundingRect = $("#svg-canvas")[0].getBoundingClientRect();
+                    return {
+                        left:boundingRect.left,
+                        top:boundingRect.top
+                    };
+                },
+                getSvgCanvasOffset = function (svgCanvasOrigin, clientRect) {
+                    return {
+                        left:clientRect.left - svgCanvasOrigin.left,
+                        top:clientRect.top - svgCanvasOrigin.top
+                    }
+                },
+                getJquerySvg = function () {
+                    var svgRootElement = $("#svg-canvas")[0];
+                    return new $.svg._wrapperClass(svgRootElement);
+                };
+
+        $(document).ready(function () {
+            console.log("document.ready()");
+
+            var svgCanvasOrigin = getSvgCanvasOrigin(),
+                    getBoundingRect = function (event) {
+                        var clientRect = event.target.getBoundingClientRect();
+                        console.log(clientRect);
+                        console.log(getSvgCanvasOffset(svgCanvasOrigin, clientRect));
+                    },
+                    svg = getJquerySvg();
+
+            $("#circle1").click(getBoundingRect);
+            $("#buttony").click(getBoundingRect);
+            $("#cardy").click(getBoundingRect);
+
+            var cards = ["AC", "2C", "3C", "4C", "5C", "6C", "7C", "8C", "9C", "10C", "JC", "QC", "KC"],
+                    index = 0;
+            $("#circle4").click(function (event) {
+                var currentCard = cards[index];
+                $("#" + currentCard).remove();
+
+                index = index + 1;
+                if (index >= cards.length) {
+                    index = 0;
+                }
+                currentCard = cards[index];
+
+                svg.use("svg/individual/Clubs/" + currentCard + ".svg#layer1", {
+                    id:currentCard,
+                    transform:"translate(59.91668701171875, -369.76666259765625)"
+                });
+            });
+
+            var nextPinkHeight = 275;
+            $("#circle3").click(function (event) {
+                svg.circle(0, 0, 22, {fill:"pink", stroke:"blue", strokeWidth:5, transform:"translate(50 " + nextPinkHeight + ")"});
+                nextPinkHeight = nextPinkHeight + 75;
+            });
+        });
+    </script>
+</head>
+<body>
+<label>whee stuff: </label><label id="fun"></label>
+<input id="buttony" type="button" value="Whee!"/>
+<svg id="svg-canvas" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="1000">
+
+    <rect x="0" y="0" width="100%" height="100%" fill="dodgerblue"></rect>
+    <circle id="circle1"
+            transform="translate(50 200)" cx="0" cy="0" r="22"
+            fill="blue" stroke="black" stroke-width="8"></circle>
+    <circle id="circle2"
+            transform="translate(200 50)" cx="0" cy="0" r="22"
+            fill="grey" stroke="black" stroke-width="8"/>
+    <circle id="circle3"
+            transform="translate(50 50)" cx="0" cy="0" r="22"
+            fill="orange" stroke="black" stroke-width="8"/>
+    <circle id="circle4"
+            transform="translate(200 200)" cx="0" cy="0" r="22"
+            fill="red" stroke="black" stroke-width="8"/>
+
+    <use id="AC" xlink:href="svg/individual/Clubs/AC.svg#layer1"
+         transform="translate(59.91668701171875, -369.76666259765625)"></use>
+
+</svg>
+
+</body>
+</html>

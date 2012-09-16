@@ -34,7 +34,7 @@ function endMove(){
     <defs>
         <circle id="circle4" fill="red" stroke="black" stroke-width="8" cx="0" cy="0" r="22"/>
         <g id="blah">
-            <use xlink:href="svg-cards.svg#3_club"/>
+            <use xlink:href="svg/individual/Clubs/2C.svg"/>
             <circle fill="green" stroke="black" stroke-width="8" cx="0" cy="0" r="22"/>
         </g>
     </defs>
@@ -54,11 +54,14 @@ function endMove(){
                 transform="translate(50 50)" cx="0" cy="0" r="22"
                 fill="orange" stroke="black" stroke-width="8"/>
 
-        <use xlink:href="svg-cards.svg#1_club" x="300" y="300"
+        <use xlink:href="svg/individual/Clubs/AC.svg" x="300" y="300"
              onmousedown="startMove(evt, 'single')" onmouseup="endMove()"/>
-        <use xlink:href="svg-cards.svg#2_club" x="300" y="300"
-             transform="translate(0 0)"
+        <image xlink:href="2C.svg" x="600" y="300"
              onmousedown="startMove(evt, 'single')" onmouseup="endMove()"/>
+        <!--
+        <use xlink:href="2C.svg" x="600" y="300"
+             onmousedown="startMove(evt, 'single')" onmouseup="endMove()"/>
+        -->
         <use xlink:href="#circle4" x="300" y="300"
              transform="translate(0 0)"
              onmousedown="startMove(evt, 'single')" onmouseup="endMove()"/>
